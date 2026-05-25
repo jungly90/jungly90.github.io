@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Anshu Pandit</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+
+.portfolio-header {
+  padding: 160px 60px 80px;
+  text-align: center;
+  background: var(--cream);
+}
+
+.portfolio-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(60px, 12vw, 160px);
+  font-weight: 800;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  line-height: 1;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+}
+
+.portfolio-subtitle {
+  font-family: 'Cormorant', serif;
+  font-size: 20px;
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding: 20px 20px 60px;
+  background: var(--cream);
+}
+
+.portfolio-item {
+  position: relative;
+  height: 500px;
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--ocean-deep);
+}
+
+.portfolio-item-bg {
+  position: absolute; inset: 0;
+  background-size: cover;
+  filter: saturate(0.68) brightness(0.72);
+  transition: transform 0.8s ease, filter 0.7s ease;
+}
+
+.portfolio-item:hover .portfolio-item-bg {
+  transform: scale(1.05);
+  filter: saturate(0.85) brightness(0.62);
+}
+
+.portfolio-item-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(13,43,62,0.82) 0%, rgba(13,43,62,0.08) 55%, transparent 100%);
+  transition: background 0.5s ease;
+}
+
+.portfolio-item:hover .portfolio-item-overlay {
+  background: linear-gradient(to top, rgba(13,43,62,0.92) 0%, rgba(13,43,62,0.48) 60%, rgba(13,43,62,0.1) 100%);
+}
+
+.portfolio-item-content {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 44px; z-index: 2;
+  transform: translateY(6px);
+  transition: transform 0.5s ease;
+}
+
+.portfolio-item:hover .portfolio-item-content { transform: translateY(0); }
+
+.portfolio-item-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(26px, 2.8vw, 40px);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+}
+
+.portfolio-item-desc {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px; font-weight: 400;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.65;
+  opacity: 0; transform: translateY(8px);
+  transition: opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s;
+  max-width: 400px;
+}
+
+.portfolio-item:hover .portfolio-item-desc { opacity: 1; transform: translateY(0); }
+
+.portfolio-item-cta {
+  display: inline-block;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(255,255,255,0.75);
+  margin-top: 18px;
+  opacity: 0; transform: translateY(6px);
+  transition: opacity 0.4s ease 0.2s, transform 0.4s ease 0.2s;
+  border-bottom: 2px solid rgba(255,255,255,0.35);
+  padding-bottom: 2px;
+}
+
+.portfolio-item:hover .portfolio-item-cta { opacity: 1; transform: translateY(0); }
+
+/* LIGHTBOX */
+.lightbox {
+  position: fixed; inset: 0; z-index: 10000;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+}
+
+.lightbox.open { opacity: 1; pointer-events: all; }
+
+.lightbox-backdrop {
+  position: absolute; inset: 0;
+  background: rgba(13,43,62,0.94);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+}
+
+.lightbox-box {
+  position: relative; z-index: 2;
+  background: var(--cream);
+  max-width: 880px; width: 92%; max-height: 88vh; overflow-y: auto;
+  padding: 64px;
+  transform: translateY(20px); transition: transform 0.4s ease;
+}
+
+.lightbox.open .lightbox-box { transform: translateY(0); }
+
+.lightbox-close {
+  position: absolute; top: 24px; right: 28px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--text-secondary); background: none; border: none; cursor: pointer;
+  transition: color 0.3s ease; padding: 4px 8px;
+}
+
+.lightbox-close:hover { color: var(--text-primary); }
+
+.lightbox-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.35em; text-transform: uppercase;
+  color: var(--text-light); margin-bottom: 14px; display: block;
+}
+
+.lightbox-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(32px, 5vw, 56px); font-weight: 800;
+  color: var(--text-primary); margin-bottom: 22px;
+  line-height: 1.05; letter-spacing: -0.02em;
+}
+
+.lightbox-divider { width: 48px; height: 3px; background: var(--blush); margin-bottom: 26px; }
+
+.lightbox-body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 15px; font-weight: 400;
+  color: var(--text-secondary); line-height: 1.82; margin-bottom: 14px;
+}
+
+/* News logos — ONE row of 3 */
+.logo-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 36px;
+  flex-wrap: wrap;
+}
+
+.logo-row-item {
+  display: flex; align-items: center; justify-content: center;
+  flex: 1; min-width: 120px; max-width: 220px;
+  transition: opacity 0.3s ease;
+}
+
+.logo-row-item:hover { opacity: 0.75; }
+
+.logo-row-item img {
+  max-width: 180px; max-height: 70px;
+  width: 100%; object-fit: contain;
+}
+
+/* Strategic comms logos — 2 big */
+.logo-grid-2 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 60px;
+  margin-top: 36px;
+  flex-wrap: wrap;
+}
+
+.logo-grid-2-item {
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.3s ease;
+}
+
+.logo-grid-2-item:hover { opacity: 0.8; }
+
+.logo-grid-2-item img {
+  width: 280px;
+  max-height: 140px;
+  object-fit: contain;
+}
+
+/* Link tiles */
+.link-tiles {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 12px; margin-top: 32px;
+}
+
+.link-tile {
+  display: block; background: var(--cream-dark);
+  text-decoration: none;
+  transition: background 0.3s ease; border-left: 3px solid var(--blush);
+  overflow: hidden;
+}
+
+.link-tile:hover { background: var(--cream-mid); }
+
+.link-tile-thumb {
+  width: 100%; height: 160px;
+  object-fit: cover; display: block;
+}
+
+.link-tile-body { padding: 16px 18px; }
+
+.link-tile-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 9px; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--text-light); display: block; margin-bottom: 6px;
+}
+
+.link-tile-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 15px; font-weight: 600; color: var(--text-primary); line-height: 1.3;
+}
+
+/* Plain link tiles (no thumb) */
+.link-tile-plain {
+  display: block; background: var(--cream-dark);
+  padding: 28px 22px;
+  text-decoration: none;
+  transition: background 0.3s ease; border-left: 3px solid var(--blush);
+}
+
+.link-tile-plain:hover { background: var(--cream-mid); }
+
+@media (max-width: 768px) {
+  .portfolio-header { padding: 120px 28px 56px; }
+  .portfolio-grid { grid-template-columns: 1fr; }
+  .portfolio-item { height: 360px; }
+  .lightbox-box { padding: 40px 24px; }
+  .logo-row { gap: 24px; }
+  .link-tiles { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav id="main-nav" class="scrolled">
+  <div class="nav-social">
+    <a href="https://instagram.com/anshupandit" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+    <a href="https://www.linkedin.com/in/anshu-pandit/" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+    <a href="https://junglyplanet.substack.com" target="_blank" aria-label="Substack"><svg viewBox="0 0 24 24"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg></a>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="portfolio.html" class="active">Portfolio</a></li>
+    <li><a href="connect.html">Connect</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <ul class="mobile-menu-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="portfolio.html" class="active">Portfolio</a></li>
+    <li><a href="connect.html">Connect</a></li>
+  </ul>
+  <div class="mobile-menu-social">
+    <a href="https://instagram.com/anshupandit" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+    <a href="https://www.linkedin.com/in/anshu-pandit/" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+    <a href="https://junglyplanet.substack.com" target="_blank" aria-label="Substack"><svg viewBox="0 0 24 24"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg></a>
+  </div>
+</div>
+
+
+<div class="portfolio-header">
+  <h1 class="portfolio-title">Portfolio</h1>
+  <p class="portfolio-subtitle">Selected work across storytelling, journalism, and strategy.</p>
+</div>
+
+<div class="portfolio-grid">
+
+  <div class="portfolio-item" onclick="openLightbox('impact')">
+    <div class="portfolio-item-bg" style="background-image: url('Impact_Storytelling.jpg'); background-position: center 15%;"></div>
+    <div class="portfolio-item-overlay"></div>
+    <div class="portfolio-item-content">
+      <h2 class="portfolio-item-title">Impact Storytelling</h2>
+      <p class="portfolio-item-desc">Field documentation, visual narratives, and immersive storytelling from Raja Ampat, Baja California, French Polynesia, and beyond.</p>
+      <span class="portfolio-item-cta">View Work →</span>
+    </div>
+  </div>
+
+  <div class="portfolio-item" onclick="openLightbox('news')">
+    <div class="portfolio-item-bg" style="background-image: url('News.jpg'); background-position: center center;"></div>
+    <div class="portfolio-item-overlay"></div>
+    <div class="portfolio-item-content">
+      <h2 class="portfolio-item-title">News</h2>
+      <p class="portfolio-item-desc">10+ years producing broadcast and digital journalism — covering climate summits, ocean policy, and global events.</p>
+      <span class="portfolio-item-cta">View Work →</span>
+    </div>
+  </div>
+
+  <div class="portfolio-item" onclick="openLightbox('social')">
+    <div class="portfolio-item-bg" style="background-image: url('Social_Media.jpg'); background-position: center 65%;"></div>
+    <div class="portfolio-item-overlay"></div>
+    <div class="portfolio-item-content">
+      <h2 class="portfolio-item-title">Social Media</h2>
+      <p class="portfolio-item-desc">Content strategy and platform storytelling for ocean and climate organizations.</p>
+      <span class="portfolio-item-cta">View Work →</span>
+    </div>
+  </div>
+
+  <div class="portfolio-item" onclick="openLightbox('comms')">
+    <div class="portfolio-item-bg" style="background-image: url('Strategic_Comms.jpg'); background-position: center 30%;"></div>
+    <div class="portfolio-item-overlay"></div>
+    <div class="portfolio-item-content">
+      <h2 class="portfolio-item-title">Strategic Communications</h2>
+      <p class="portfolio-item-desc">Narrative strategy, stakeholder messaging, and communications consulting for mission-driven organizations.</p>
+      <span class="portfolio-item-cta">View Work →</span>
+    </div>
+  </div>
+
+</div>
+
+<section class="cta-section">
+  <video class="cta-video" autoplay muted loop playsinline><source src="Waves.mov" type="video/mp4"><source src="Waves.mov" type="video/quicktime"></video>
+  <div class="cta-overlay"></div>
+  <div class="cta-grain"></div>
+  <div class="cta-content">
+    <span class="cta-label">Ready?</span>
+    <h2 class="cta-headline">Let's make waves.</h2>
+    <p class="cta-sub">Stories that move people. Work that matters.</p>
+    <a href="connect.html" class="cta-button">Connect With Me</a>
+    <div class="cta-social">
+      <a href="https://instagram.com/anshupandit" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+      <a href="https://www.linkedin.com/in/anshu-pandit/" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <a href="https://junglyplanet.substack.com" target="_blank" aria-label="Substack"><svg viewBox="0 0 24 24"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox" onclick="closeLightboxClick(event)">
+  <div class="lightbox-backdrop"></div>
+  <div class="lightbox-box" id="lightbox-content"></div>
+</div>
+
+<script>
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 0); });
+  const vid = document.querySelector('.cta-video');
+  if (vid) { const s = () => { vid.playbackRate = 0.45; }; vid.addEventListener('loadeddata', s); vid.addEventListener('canplay', s); if (vid.readyState >= 2) s(); }
+
+  function buildLightbox(type) {
+    if (type === 'impact') {
+      return `
+        <button class="lightbox-close" onclick="closeLightbox()">Close ✕</button>
+        <span class="lightbox-label">Impact Storytelling</span>
+        <h2 class="lightbox-title">Impact Storytelling</h2>
+        <div class="lightbox-divider"></div>
+        <p class="lightbox-body">Field documentation and visual narrative work from some of the world's most biodiverse marine ecosystems.</p>
+        <div class="link-tiles">
+          <a href="https://substack.com/@junglyplanet/p-181961150" target="_blank" class="link-tile">
+            <img src="WHALE_HERO.jpg" class="link-tile-thumb" alt="Orca story">
+            <div class="link-tile-body">
+              <span class="link-tile-label">Substack</span>
+              <span class="link-tile-title">Read the story →</span>
+            </div>
+          </a>
+          <a href="https://www.instagram.com/reel/DXvmsFThqvK/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" class="link-tile">
+            <img src="Reel_Thumb.jpg" class="link-tile-thumb" alt="Instagram Reel">
+            <div class="link-tile-body">
+              <span class="link-tile-label">Instagram Reel</span>
+              <span class="link-tile-title">Watch the reel →</span>
+            </div>
+          </a>
+        </div>`;
+    }
+
+    if (type === 'news') {
+      return `
+        <button class="lightbox-close" onclick="closeLightbox()">Close ✕</button>
+        <span class="lightbox-label">News</span>
+        <h2 class="lightbox-title">News</h2>
+        <div class="lightbox-divider"></div>
+        <p class="lightbox-body">Over a decade producing broadcast and digital journalism for international newsrooms — covering UN Climate Summits, APEC, the UN Ocean Conference, and breaking environmental news.</p>
+        <div class="logo-row">
+          <div class="logo-row-item"><img src="CGTN_America.jpg" alt="CGTN America"></div>
+          <div class="logo-row-item"><img src="SKY.png" alt="Sky News"></div>
+          <div class="logo-row-item"><img src="SBS.jpg" alt="SBS News"></div>
+        </div>`;
+    }
+
+    if (type === 'social') {
+      return `
+        <button class="lightbox-close" onclick="closeLightbox()">Close ✕</button>
+        <span class="lightbox-label">Social Media</span>
+        <h2 class="lightbox-title">Social Media</h2>
+        <div class="lightbox-divider"></div>
+        <p class="lightbox-body">Content strategy and platform storytelling for ocean and climate organizations — building audiences and making complex science accessible.</p>
+        <div class="link-tiles">
+          <a href="https://instagram.com/anshupandit" target="_blank" class="link-tile-plain">
+            <span class="link-tile-label">Instagram</span>
+            <span class="link-tile-title" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;color:var(--text-primary);">@anshupandit →</span>
+          </a>
+          <a href="https://junglyplanet.substack.com" target="_blank" class="link-tile-plain">
+            <span class="link-tile-label">Substack</span>
+            <span class="link-tile-title" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;color:var(--text-primary);">Jungly Planet →</span>
+          </a>
+          <a href="https://www.youtube.com/shorts/SGBrKDXJ2kA" target="_blank" class="link-tile-plain">
+            <span class="link-tile-label">YouTube Short</span>
+            <span class="link-tile-title" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;color:var(--text-primary);">Watch →</span>
+          </a>
+          <a href="https://www.youtube.com/shorts/TN10bdCgSe0" target="_blank" class="link-tile-plain">
+            <span class="link-tile-label">YouTube Short</span>
+            <span class="link-tile-title" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;color:var(--text-primary);">Watch →</span>
+          </a>
+        </div>`;
+    }
+
+    if (type === 'comms') {
+      return `
+        <button class="lightbox-close" onclick="closeLightbox()">Close ✕</button>
+        <span class="lightbox-label">Strategic Communications</span>
+        <h2 class="lightbox-title">Strategic Communications</h2>
+        <div class="lightbox-divider"></div>
+        <p class="lightbox-body">Narrative strategy, stakeholder messaging, and communications consulting for mission-driven ocean and climate organizations.</p>
+        <div class="logo-grid-2">
+          <a href="https://creativeclimatelab.com" target="_blank" class="logo-grid-2-item" style="text-decoration:none;">
+            <img src="CCL.jpg" alt="Creative Climate Lab">
+          </a>
+          <a href="https://mermaid.energy" target="_blank" class="logo-grid-2-item" style="text-decoration:none;">
+            <img src="ME.jpg" alt="Mermaid Energy">
+          </a>
+        </div>`;
+    }
+  }
+
+  function openLightbox(type) {
+    document.getElementById('lightbox-content').innerHTML = buildLightbox(type);
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeLightboxClick(e) {
+    if (e.target === document.getElementById('lightbox') || e.target.classList.contains('lightbox-backdrop')) closeLightbox();
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+  // Hamburger menu
+  const hbg = document.getElementById('hamburger');
+  const mob = document.getElementById('mobile-menu');
+  hbg.addEventListener('click', () => {
+    hbg.classList.toggle('open');
+    mob.classList.toggle('open');
+    document.body.style.overflow = mob.classList.contains('open') ? 'hidden' : '';
+  });
+  mob.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      hbg.classList.remove('open');
+      mob.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+</script>
+</body>
+</html>
