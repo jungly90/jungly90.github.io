@@ -158,6 +158,27 @@
   .connect-body { grid-template-columns: 1fr; gap: 60px; padding: 80px 28px; }
   .connect-header { height: 45vh; }
 }
+
+/* Formspree state styles */
+.form-success-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 17px; font-weight: 700;
+  color: var(--text-primary); margin-bottom: 10px;
+}
+.form-success-body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px; color: var(--text-secondary); line-height: 1.75;
+}
+.form-error-banner {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px; color: #b94040; line-height: 1.6; margin-bottom: 12px;
+}
+.form-field-error {
+  display: block; font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px; color: #b94040; letter-spacing: 0.02em;
+  margin-top: 4px; min-height: 14px;
+}
+.form-submit:disabled { opacity: 0.55; cursor: not-allowed; }
 </style>
 </head>
 <body>
@@ -214,13 +235,20 @@
   </div>
 
   <div class="connect-form">
-    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+    <div data-fs-success>
+      <p class="form-success-title">Message sent!</p>
+      <p class="form-success-body">Thank you for reaching out. I'll be in touch within 48 hours.</p>
+    </div>
+    <div data-fs-error class="form-error-banner"></div>
+    <form id="connect-form">
       <label class="form-label" for="name">Your Name</label>
-      <input class="form-input" type="text" id="name" name="name" placeholder="Full name" required>
+      <input class="form-input" type="text" id="name" name="name" placeholder="Full name" required data-fs-field>
+      <span data-fs-error="name" class="form-field-error"></span>
       <label class="form-label" for="email">Email Address</label>
-      <input class="form-input" type="email" id="email" name="email" placeholder="your@email.com" required>
+      <input class="form-input" type="email" id="email" name="email" placeholder="your@email.com" required data-fs-field>
+      <span data-fs-error="email" class="form-field-error"></span>
       <label class="form-label" for="type">Type of Inquiry</label>
-      <select class="form-select" id="type" name="type">
+      <select class="form-select" id="type" name="type" data-fs-field>
         <option value="" disabled selected>Select one</option>
         <option value="storytelling">Ocean Storytelling Project</option>
         <option value="consulting">Narrative Strategy / Consulting</option>
@@ -229,9 +257,11 @@
         <option value="comms">Strategic Communications</option>
         <option value="other">Something Else</option>
       </select>
+      <span data-fs-error="type" class="form-field-error"></span>
       <label class="form-label" for="message">Tell Me About Your Project</label>
-      <textarea class="form-textarea" id="message" name="message" placeholder="Share a bit about what you're working on and how I can help..." required></textarea>
-      <button type="submit" class="form-submit">Send Message</button>
+      <textarea class="form-textarea" id="message" name="message" placeholder="Share a bit about what you're working on and how I can help..." required data-fs-field></textarea>
+      <span data-fs-error="message" class="form-field-error"></span>
+      <button type="submit" class="form-submit" data-fs-submit-btn>Send Message</button>
       <p class="form-note">I typically respond within 48 hours. For urgent inquiries, find me on LinkedIn.</p>
     </form>
   </div>
@@ -280,5 +310,10 @@
     });
   });
 </script>
+<script>
+  window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+  formspree('initForm', { formElement: '#connect-form', formId: 'xykvdbee' });
+</script>
+<script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 </body>
 </html>
