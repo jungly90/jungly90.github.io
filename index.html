@@ -64,11 +64,11 @@
 
 .hero-video {
   position: absolute;
-  top: 50%;
+  top: 0;
   left: 0;
   width: 100%;
-  height: auto;
-  transform: translateY(-50%);
+  height: 100%;
+  object-fit: cover;
 }
 
 .hero-overlay {
@@ -361,7 +361,8 @@
 @media (max-width: 900px) {
   .postcard-outer { padding: 80px 24px; }
   .postcard-card { flex-direction: column; min-height: auto; }
-  .postcard-photo-side { width: 100%; height: 280px; }
+  .postcard-photo-side { width: 100%; height: 380px; }
+  .postcard-photo-side img { object-position: center 20%; }
   .postcard-divider { display: none; }
   .postcard-letter-side { padding: 32px 28px; }
   .letter-content { padding-right: 0; }

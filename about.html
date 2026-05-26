@@ -319,6 +319,10 @@
   /* Images flow naturally by their own aspect ratio wrappers */
   .collage-left { height: auto; }
 
+  /* Show only first photo (headshot) on mobile */
+  .collage-img-wrap:nth-child(2),
+  .collage-img-wrap:nth-child(3) { display: none; }
+
   /* Hide bio col inside the grid on mobile — we show it below via .mobile-bio */
   .about-bio-col { display: none; }
 
