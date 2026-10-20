@@ -285,6 +285,7 @@ nav.scrolled .nav-links a.active { color: var(--text-primary); }
 
 .cta-button:hover::before { transform: translateX(0); }
 .cta-button:hover { letter-spacing: 0.24em; }
+.cta-headline + .cta-button { margin-top: 26px; }
 
 .cta-social {
   display: flex;
