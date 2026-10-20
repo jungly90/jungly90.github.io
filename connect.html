@@ -308,9 +308,6 @@
 </div>
 
 <section class="cta-section fade-in">
-  <video class="cta-video" autoplay muted loop playsinline>
-    <source src="src/assets/Waves.mov" type="video/mp4">
-  </video>
   <div class="cta-overlay"></div>
   <div class="cta-grain"></div>
   <div class="cta-content">
@@ -325,6 +322,25 @@
     </div>
   </div>
 </section>
+
+<footer class="site-footer">
+  <video class="footer-water" autoplay muted loop playsinline preload="metadata" poster="src/assets/footer_water_poster.jpg" aria-hidden="true">
+    <source src="src/assets/footer_water.mp4" type="video/mp4">
+    <source src="src/assets/footer_water.webm" type="video/webm">
+  </video>
+  <div class="footer-tint" aria-hidden="true"></div>
+  <div class="site-footer-inner">
+    <span class="site-footer-name">Anshu Pandit</span>
+    <a href="mailto:anshu@anshupandit.com">anshu@anshupandit.com</a>
+    <span>&copy; 2026</span>
+  </div>
+</footer>
+<script>
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.footer-water').forEach(v => { v.removeAttribute('autoplay'); v.pause(); });
+  }
+</script>
+
 
 <script>
   const nav = document.getElementById('main-nav');

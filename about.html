@@ -138,7 +138,7 @@
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 11px; font-weight: 700;
   letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--blush); margin-bottom: 32px; display: block;
+  color: var(--gold-text); margin-bottom: 32px; display: block;
 }
 
 .about-pull-quote {
@@ -345,7 +345,7 @@
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 11px; font-weight: 700;
     letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--blush); margin-bottom: 28px; display: block;
+    color: var(--gold-text); margin-bottom: 28px; display: block;
   }
 
   .mobile-bio .about-pull-quote {
@@ -469,9 +469,6 @@
 
 <!-- CTA -->
 <section class="cta-section fade-in">
-  <video class="cta-video" autoplay muted loop playsinline>
-    <source src="src/assets/Waves.mov" type="video/mp4">
-  </video>
   <div class="cta-overlay"></div>
   <div class="cta-grain"></div>
   <div class="cta-content">
@@ -486,6 +483,25 @@
     </div>
   </div>
 </section>
+
+<footer class="site-footer">
+  <video class="footer-water" autoplay muted loop playsinline preload="metadata" poster="src/assets/footer_water_poster.jpg" aria-hidden="true">
+    <source src="src/assets/footer_water.mp4" type="video/mp4">
+    <source src="src/assets/footer_water.webm" type="video/webm">
+  </video>
+  <div class="footer-tint" aria-hidden="true"></div>
+  <div class="site-footer-inner">
+    <span class="site-footer-name">Anshu Pandit</span>
+    <a href="mailto:anshu@anshupandit.com">anshu@anshupandit.com</a>
+    <span>&copy; 2026</span>
+  </div>
+</footer>
+<script>
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.footer-water').forEach(v => { v.removeAttribute('autoplay'); v.pause(); });
+  }
+</script>
+
 
 <script>
   const nav = document.getElementById('main-nav');

@@ -5,15 +5,34 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Cormorant+SC:wght@400;500;600&family=Caveat:wght@400;500;600;700&family=Dancing+Script:wght@400;500;600;700&display=swap');
 
 :root {
-  --cream: #F5EAE2;
-  --cream-dark: #EAD9CE;
-  --cream-mid: #F0E0D5;
-  --text-primary: #1E1E1E;
-  --text-secondary: #5A5550;
-  --text-light: #9A9490;
-  --ocean-deep: #0D2B3E;
-  --ocean-mid: #1A4A6B;
-  --blush: #C8907E;
+  /* Pearl palette (preview) */
+  --cream: #F3ECE2;        /* warm pearl linen — main background (media kit warmth) */
+  --cream-dark: #E9E0D3;   /* champagne — alternate sections, fine rules */
+  --cream-mid: #EFE7DB;
+  --text-primary: #211B18; /* warm near-black, as in the media kit */
+  --text-secondary: #463C37;
+  --text-light: #6B5F57;   /* readable taupe for small labels */
+  --ocean-deep: #243E50;   /* midnight */
+  --ocean-mid: #326E76;    /* ocean teal */
+  --blush: #B49A78;        /* antique gold — rules and details only */
+  --gold: #B49A78;
+  --gold-text: #74593D;
+  --peach: #EBCFC5;
+  --lavender: #DCD4E7;
+  --shell: #EEDDE3;
+
+  /* Mother-of-pearl: soft colour shifts, used sparingly */
+  --nacre:
+    radial-gradient(110% 80% at 8% 0%, rgba(236,198,178,0.58) 0%, rgba(236,198,178,0) 55%),      /* apricot peach */
+    radial-gradient(90% 75% at 96% 18%, rgba(226,201,213,0.68) 0%, rgba(226,201,213,0) 60%),     /* rosy mauve-lilac */
+    radial-gradient(85% 90% at 62% 108%, rgba(240,210,205,0.80) 0%, rgba(240,210,205,0) 62%),    /* warm blush */
+    radial-gradient(55% 45% at 34% 58%, rgba(240,222,190,0.50) 0%, rgba(240,222,190,0) 70%),     /* champagne-gold glow */
+    linear-gradient(135deg, #F7EFE4 0%, #EFE3D4 100%);
+  /* soft band of light across the shell */
+  --sheen: linear-gradient(112deg,
+    rgba(255,255,255,0) 28%,
+    rgba(255,255,255,0.55) 44%,
+    rgba(255,255,255,0) 60%);
 
   /* Font families */
   --font-heading: 'Plus Jakarta Sans', sans-serif;
@@ -63,7 +82,7 @@ nav {
 }
 
 nav.scrolled {
-  background: rgba(245, 234, 226, 0.96);
+  background: rgba(243, 236, 226, 0.94);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(107, 101, 96, 0.1);
@@ -180,27 +199,21 @@ nav.scrolled .nav-links a.active { color: var(--text-primary); }
 ============================================================ */
 .cta-section {
   position: relative;
-  background: var(--ocean-deep);
+  background: var(--nacre);
   padding: 140px 60px;
   text-align: center;
   overflow: hidden;
+  border-top: 1px solid rgba(180,154,120,0.35);
 }
 
-.cta-video {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-  opacity: 0.28;
-  filter: saturate(0.55) brightness(0.8);
-}
+/* Pearl closing section: the waves video is retired here */
+.cta-video { display: none; }
 
+/* A slow band of light across the shell surface */
 .cta-overlay {
   position: absolute; inset: 0; z-index: 1;
-  background: linear-gradient(160deg,
-    rgba(13,43,62,0.82) 0%,
-    rgba(26,74,107,0.62) 50%,
-    rgba(13,43,62,0.88) 100%
-  );
+  background: var(--sheen);
+  mix-blend-mode: soft-light;
 }
 
 .cta-grain {
@@ -218,7 +231,7 @@ nav.scrolled .nav-links a.active { color: var(--text-primary); }
   font-weight: 600;
   letter-spacing: 0.4em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.5);
+  color: var(--gold-text);
   margin-bottom: 20px;
   display: block;
 }
@@ -228,7 +241,7 @@ nav.scrolled .nav-links a.active { color: var(--text-primary); }
   font-size: clamp(48px, 7vw, 88px);
   font-weight: 400;
   font-style: italic;
-  color: #fff;
+  color: var(--ocean-deep);
   line-height: 1.1;
   margin-bottom: 14px;
 }
@@ -237,7 +250,7 @@ nav.scrolled .nav-links a.active { color: var(--text-primary); }
   font-family: var(--font-serif);
   font-size: 20px;
   font-style: italic;
-  color: rgba(255,255,255,0.55);
+  color: var(--text-secondary);
   margin-bottom: 52px;
   letter-spacing: 0.06em;
 }
@@ -249,26 +262,29 @@ nav.scrolled .nav-links a.active { color: var(--text-primary); }
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #fff;
+  color: #F7EFE4;
+  background: var(--ocean-deep);
   text-decoration: none;
   padding: 18px 56px;
-  border: 2px solid rgba(255,255,255,0.4);
-  transition: all 0.45s ease;
+  border: 1.5px solid var(--ocean-deep);
+  transition: color 0.45s ease, letter-spacing 0.45s ease;
   position: relative;
   overflow: hidden;
   margin-bottom: 52px;
+  z-index: 0;
 }
 
 .cta-button::before {
   content: '';
   position: absolute; inset: 0;
-  background: rgba(255,255,255,0.08);
+  background: var(--ocean-mid);
   transform: translateX(-100%);
   transition: transform 0.45s ease;
+  z-index: -1;
 }
 
 .cta-button:hover::before { transform: translateX(0); }
-.cta-button:hover { border-color: rgba(255,255,255,0.75); letter-spacing: 0.24em; }
+.cta-button:hover { letter-spacing: 0.24em; }
 
 .cta-social {
   display: flex;
@@ -277,13 +293,80 @@ nav.scrolled .nav-links a.active { color: var(--text-primary); }
 }
 
 .cta-social a {
-  color: rgba(255,255,255,0.45);
+  color: var(--text-light);
   transition: color 0.3s ease;
   display: flex;
 }
 
-.cta-social a:hover { color: rgba(255,255,255,0.9); }
+.cta-social a:hover { color: var(--text-primary); }
 .cta-social svg { width: 19px; height: 19px; fill: currentColor; }
+
+/* ============================================================
+   FOOTER — real water, light on the surface
+============================================================ */
+.site-footer {
+  position: relative;
+  z-index: 4;
+  margin-top: -90px;            /* the pearl section dissolves into the sea */
+  height: 320px;
+  overflow: hidden;
+  font-family: var(--font-heading);
+}
+
+.footer-water {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+  filter: saturate(0.9) brightness(0.95);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.04) 8%, rgba(0,0,0,0.16) 16%, rgba(0,0,0,0.38) 25%, rgba(0,0,0,0.66) 34%, rgba(0,0,0,0.88) 43%, #000 52%);
+          mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.04) 8%, rgba(0,0,0,0.16) 16%, rgba(0,0,0,0.38) 25%, rgba(0,0,0,0.66) 34%, rgba(0,0,0,0.88) 43%, #000 52%);
+}
+
+/* warm the water toward the pearl palette and deepen it where the text sits */
+.footer-tint {
+  position: absolute; inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgba(236,198,178,0) 0%, rgba(236,198,178,0.18) 30%, rgba(236,198,178,0) 55%),
+    linear-gradient(to bottom, rgba(36,62,80,0) 35%, rgba(36,62,80,0.45) 70%, rgba(26,46,60,0.82) 100%);
+}
+
+.site-footer-inner {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding: 0 56px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(247,239,228,0.85);
+  text-shadow: 0 1px 12px rgba(13,30,42,0.45);
+}
+
+.site-footer-name { color: #F7EFE4; letter-spacing: 0.3em; }
+
+.site-footer a {
+  color: #F3DFC8;
+  text-decoration: none;
+  letter-spacing: 0.12em;
+  text-transform: none;
+  font-weight: 500;
+  font-size: 13px;
+  border-bottom: 1px solid rgba(243,223,200,0.45);
+  padding-bottom: 2px;
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+.site-footer a:hover { color: #FFFFFF; border-color: rgba(255,255,255,0.85); }
+
+@media (max-width: 900px) {
+  .site-footer { margin-top: -70px; height: 280px; }
+  .site-footer-inner { flex-direction: column; text-align: center; padding: 0 24px 28px; gap: 12px; }
+}
 
 /* ============================================================
    UTILITIES
@@ -352,7 +435,7 @@ nav.scrolled .hamburger span { background: var(--text-primary); }
   display: none;
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(245, 234, 226, 0.98);
+  background: rgba(243, 236, 226, 0.98);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   z-index: 1050;
