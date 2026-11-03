@@ -304,10 +304,10 @@ nav.scrolled .nav-links a.active { color: var(--text-primary); }
 .site-footer {
   position: relative;
   z-index: 4;
-  margin-top: 0;
+  margin-top: -55px;            /* wave rises over the cream section */
   height: 200px;
   overflow: hidden;
-  background: linear-gradient(to bottom, var(--nacre) 0, var(--nacre) 55px, #0D2B3E 55px);
+  background: linear-gradient(to bottom, transparent 0, transparent 55px, #0D2B3E 55px);
   font-family: var(--font-heading);
 }
 
@@ -350,7 +350,7 @@ nav.scrolled .nav-links a.active { color: var(--text-primary); }
 .site-footer a:hover { color: #FFFFFF; border-color: rgba(255,255,255,0.85); }
 
 @media (max-width: 900px) {
-  .site-footer { height: 220px; }
+  .site-footer { height: 220px; margin-top: -55px; }
   .site-footer-inner { flex-direction: column; text-align: center; padding: 0 24px 28px; gap: 12px; }
 }
 
