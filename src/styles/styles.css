@@ -350,6 +350,70 @@ nav.scrolled .nav-links a.active { color: var(--text-primary); }
   .site-footer-inner { flex-direction: column; text-align: center; padding: 0 24px 28px; gap: 12px; }
 }
 
+
+/* ============================================================
+   WORK WITH ME / MEDIA KIT
+============================================================ */
+.work-section { padding: 110px 56px; background: var(--cream); }
+.work-inner { max-width: 1100px; margin: 0 auto; }
+.work-head { text-align: center; max-width: 720px; margin: 0 auto 56px; }
+.work-title {
+  font-family: var(--font-serif); font-style: italic; font-weight: 400;
+  font-size: clamp(36px, 5vw, 56px); line-height: 1.12; color: var(--ocean-deep);
+  margin-bottom: 18px;
+}
+.work-lede {
+  font-family: var(--font-body); font-size: 15px; line-height: 1.85;
+  color: var(--text-secondary);
+}
+.work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.work-card {
+  background: rgba(255,255,255,0.42);
+  border: 1px solid rgba(180,154,120,0.35);
+  padding: 34px 28px 30px;
+}
+.work-num {
+  font-family: var(--font-heading); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.3em; color: var(--gold-text); display: block; margin-bottom: 14px;
+}
+.work-card h3 {
+  font-family: var(--font-heading); font-size: 12px; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--ocean-deep);
+  margin-bottom: 12px; line-height: 1.5;
+}
+.work-card p {
+  font-family: var(--font-body); font-size: 14px; line-height: 1.8; color: var(--text-secondary);
+}
+.work-cta { text-align: center; margin-top: 48px; }
+.work-btn {
+  display: inline-block; font-family: var(--font-heading); font-size: 12px; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none;
+  color: #F7EFE4; background: var(--ocean-deep); border: 1.5px solid var(--ocean-deep);
+  padding: 17px 44px; margin: 0 8px 12px; transition: background 0.3s ease, color 0.3s ease;
+}
+.work-btn:hover { background: var(--ocean-mid); border-color: var(--ocean-mid); }
+.work-btn.ghost { background: transparent; color: var(--ocean-deep); }
+.work-btn.ghost:hover { background: var(--ocean-deep); color: #F7EFE4; }
+
+.kit-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; text-align: center; margin-bottom: 44px; }
+.kit-stat-num { font-family: var(--font-serif); font-size: clamp(44px, 6vw, 72px); color: var(--ocean-deep); line-height: 1; display: block; }
+.kit-stat-label { font-family: var(--font-heading); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-light); line-height: 1.6; display: block; margin-top: 12px; }
+.kit-audience { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+.kit-box { border-top: 1px solid rgba(180,154,120,0.45); padding-top: 18px; }
+.kit-box h3 { font-family: var(--font-heading); font-size: 11px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold-text); margin-bottom: 12px; }
+.kit-box p { font-family: var(--font-body); font-size: 14px; line-height: 1.9; color: var(--text-secondary); }
+.kit-note { font-family: var(--font-body); font-size: 12px; color: var(--text-light); text-align: center; margin-top: 28px; }
+.kit-band { background: var(--cream-dark); }
+.kit-logos { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 44px; font-family: var(--font-heading); font-size: 12px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ocean-deep); }
+.kit-preview { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 44px; }
+.kit-preview img { width: 100%; height: auto; display: block; box-shadow: 0 10px 40px rgba(13,43,62,0.14); }
+
+@media (max-width: 900px) {
+  .work-section { padding: 80px 24px; }
+  .work-grid, .kit-audience, .kit-preview { grid-template-columns: 1fr; }
+  .kit-stats { grid-template-columns: 1fr 1fr; gap: 34px 16px; }
+}
+
 /* visually hidden but read by Google and screen readers */
 .sr-only {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
